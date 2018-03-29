@@ -16,7 +16,9 @@ Linux：/home/couchdb/couchdb/etc/default.ini modify bind_address = 0.0.0.0
 WINDOWS:  couchdb/etc/default.ini  modify bind_address = 0.0.0.0
 ### install application
 git clone https://github.com/ecoeum/node-ecoeum
+
 npm install
+
 ## Run
 node ecoeum.js
 ## Test
