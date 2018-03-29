@@ -35,7 +35,9 @@ request example:
 curl -H "Content-type:application/json" -X POST 'http://127.0.0.1:3000/peer/list'
 ### block
 curl -X GET --header 'Content-Type: application/json' 'http://127.0.0.1:3000/blocks'
-## Thans
+## Thanks
  Some ideas and codes come from conradoqg's naivecoin project
  https://github.com/conradoqg/naivecoin
  Thank you very much, conradoqg.
+##license
+MIT license
