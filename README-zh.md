@@ -81,5 +81,5 @@ curl -X GET --header 'Content-Type: application/json' 'http://127.0.0.1:3000/blo
 ## 致谢
 一些想法和代码来自conradoqg的naivecoin项目（https://github.com/conradoqg/naivecoin）
 非常感谢conradoqg。
-##license
+## License
 MIT license

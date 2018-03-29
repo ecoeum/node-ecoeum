@@ -39,5 +39,5 @@ curl -X GET --header 'Content-Type: application/json' 'http://127.0.0.1:3000/blo
  Some ideas and codes come from conradoqg's naivecoin project
  https://github.com/conradoqg/naivecoin
  Thank you very much, conradoqg.
-##license
+## License
 MIT license
