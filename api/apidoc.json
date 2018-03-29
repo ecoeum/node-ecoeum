@@ -1,8 +1,8 @@
 {
-  "name": "ecoblock",
+  "name": "node-ecoeum",
   "version": "1.0.0",
-  "description": "compile-chain api doc",
-  "title": "compile-chain",
+  "description": "node-ecoeum api doc",
+  "title": "node-ecoeum",
   "url" : "http://localhost:3000",
   "cmd" :"apidoc -i api -o apidoc"
 }

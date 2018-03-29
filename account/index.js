@@ -29,7 +29,7 @@ class Account {
             secretKey: CryptoEdDSAUtil.toHex(keyPairRaw.getSecret()),
             publicKey: CryptoEdDSAUtil.toHex(keyPairRaw.getPublic())
         }
-        //广播到自己;
+        //broadcast to self
         this.broadcast(key.publicKey);
         return key;
     }
@@ -84,7 +84,6 @@ class Account {
         let newTransaction = Transcation.fromJson(tx.build());
         return newTransaction;
     }
-
 }
 
 module.exports = Account

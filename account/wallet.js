@@ -11,9 +11,6 @@ class Wallet {
         this.keyPairs = [];
     }
 
-    /**
-     * 创建一个账户返回公钥地址;
-     */
     static createAccount(){
         return generateAddress();
     }
