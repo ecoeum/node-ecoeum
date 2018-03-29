@@ -17,7 +17,7 @@ node.js 版本:v7.9.0及以上
 Linux：配置 /home/couchdb/couchdb/etc/default.ini 修改 bind_address = 0.0.0.0
 WINDOWS:配置  couchdb/etc/default.ini 修改 bind_address = 0.0.0.0
 ### 3、安装应用
-clone 源代码
+git clone https://github.com/ecoeum/node-ecoeum
 npm install
 ## 运行
 运行两个节点的区域链。
