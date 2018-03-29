@@ -1,0 +1,8 @@
+{
+  "name": "ecoblock",
+  "version": "1.0.0",
+  "description": "compile-chain api doc",
+  "title": "compile-chain",
+  "url" : "http://localhost:3000",
+  "cmd" :"apidoc -i api -o apidoc"
+}
