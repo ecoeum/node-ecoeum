@@ -1,4 +1,7 @@
 # Node-ecoeum
+
+[中文](https://github.com/ecoeum/node-ecoeum/blob/master/README-zh.md)
+
 Node-ecoeum is a block chain project included block chain, chain browser, wallet and Smart Contracts components.It is aiming to propose a relatively simple block chain model to implement a relatively single application scenario. such as integration, archival storage and sharing applications program.Node-ecoeum is applied Node.js, koa, Crypto-js, couchdb and other technologies.Node-ecoeum is still at the stage of development.
 ## Features
 - Easy to install: clone source code, using npm install to complete the installation. Use Docker packaging is next plan.

@@ -1,5 +1,8 @@
 # node-ecoeum
+[英文](https://github.com/ecoeum/node-ecoeum)
+
 node-ecoeum是ecoeum协议的nodejs实现。ecoeum是一个区块链项目，包含了区块链、链浏览器、钱包和具体应用合约等，旨在提出相对简单的区块链模型，降低区块链的开发难度，满足企业自主实现功能相对单一的应用场景，如积分、档案存储与共享。node-ecoeum由node.js、koa、crypto-js、couchdb等技术创建。目前node-ecoeum仍在开发中。
+
 ## 主要特性
 * 易安装：下载源码安装，使用npm install即可完成安装。下一步将采用docker打包
 * 易理解：代码结构按领域划分，分为节点、块、账户、共识、交易等领域，各个领域界线清楚，代码易于理解
