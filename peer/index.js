@@ -14,6 +14,8 @@ class Peer {
         this.transactions = [];
         this.host = config.peer.host;
         this.port = config.peer.port;
+        this.id=config.peer.id;
+        this.addr=config.peer.addr;
         this.blockchain = blockchain
         this.isMiner=false;
         this.peers = [];
@@ -23,13 +25,13 @@ class Peer {
             _this.connectToPeers(_this.peers);
         }
 
-        function findMiner(_this) {
-            _this.processMiner(_this.peers);
-        }
+        //function findMiner(_this) {
+        //    _this.processMiner(_this.peers);
+        //}
 
         interval(this);
         setInterval(interval, 10000, this);
-        setInterval(findMiner, 30000, this); //find miner,findMiner>interval,or the ping peer result is not correct
+        //setInterval(findMiner, 30000, this); //find miner,findMiner>interval,or the ping peer result is not correct
         this.blockchain.isSync = 2;
 
     }

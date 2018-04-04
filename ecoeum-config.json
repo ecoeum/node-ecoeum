@@ -1,30 +1,4 @@
 {
-  "peer": {
-    "host": "192.168.10.158",
-    "port": "3000"
-  },
-  "peerList": [
-    {
-      "url": "http://192.168.10.112:3000",
-      "status": "1",
-      "height": 0
-    },
-    {
-      "url": "http://192.168.10.19:3000",
-      "status": "1",
-      "height": 0
-    },
-    {
-      "url": "http://192.168.10.96:3000",
-      "status": "1",
-      "height": 0
-    },
-    {
-      "url": "http://192.168.10.149:3000",
-      "status": "1",
-      "height": 0
-    }
-  ],
   "SystemKeyPair": {
     "secretKey": "93717ff62998bf20d24a35d64d4b9cfda765a175d2fb352921d881b4417944a3a6aa5ca3bde395d05ca32f0d0baab3653838a5972e8fb4f56897e329410305e0d80b3b0534c357545935bbf215a2d5cdffe6570cd27c962e85a4cb33550b46deb8081aa64fbedaafdd8019f6f8662638b5dcb8df454452d7a4f523272d3b96d5093107fc04e508a04a56be50b54a24be825dfe8bc5645e43680a30b69dfb8232cf623dd40bc10344912ab3494ca7e57a916a988a5a9a35841ae086586a400dd06cc61d15ab7980f7f048b66057a46085bec9a6109d6eb010822ef6a37d57651ec63bd0cb5517965d2a97e823989aea47b5b7ee5c01a302ef95fdbb440b4f698cf0ff82be8b2ba26ce3d47b89b5311f3bf7b5096d99cc985085f5f31fac55a855412d4839f810461e164b47d30da59e25145315c3cc1ff3216ab3cc4a72fe2bda91c323e75a2f058ea1408a2faefc941dd1578773b700a962146ce7601dbd475bbd84fe311038d6c57115acb2ce0d1d56bc3c788b585afaf8fe780381891538445fede7bdd8cce576a4daf2feaab6e521ce167b59ad37ff1b7d547cc707af01715f5e68a92fe276bbf440b278509d9c8753dbd916be62e4f4f8dad3feb3414caf62a174609cb38949e8f64e0de995db2bc8ee3525653b6c350153c234ebc7cf5fe209b3c44406638bbe3ce6adfaf1f6dc1f0da1e36f56dc99e54b176af10a7606",
     "publicKey": "7bdf55f8761ee480a4568cf2a854465b5941f813d0201d02ee6b0924d6dc608c"
@@ -63,5 +37,33 @@
     "port": 5984,
     "user": "user",
     "password": "password"
-  }
+  },
+  "peer": {
+    "host": "192.168.10.96",
+    "port": "3000",
+    "id":1,
+    "addr":"7bdf55f8761ee480a4568cf2a854465b5941f813d0201d02ee6b0924d6dc608c"
+  },
+  "peerList": [
+    {
+      "url": "http://192.168.10.112:3000",
+      "status": "0",
+      "height": 0
+    },
+    {
+      "url": "http://192.168.10.19:3000",
+      "status": "0",
+      "height": 0
+    },
+    {
+      "url": "http://192.168.10.149:3000",
+      "status": "0",
+      "height": 0
+    },
+    {
+      "url": "http://192.168.10.158:3000",
+      "status": "0",
+      "height": 0
+    }
+  ]
 }
