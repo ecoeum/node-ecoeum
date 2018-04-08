@@ -15,61 +15,67 @@ class Consensus {
         this.Delegates = [];
         this.currentSlot = 0;
         this.lastSlot = 0;
-        this.isFirstLoad=true;
         function processDelegate(_this) {
             _this.getDelegateId();
         }
-        setInterval(processDelegate, 1000, this);
+        setTimeout(()=>{
+            console.log("current peer consensus start......")
+            setInterval(processDelegate, 1000, this);
+        },slots.interval*slots.delegates*1000);
+
     }
 
     getDelegateId() {
         let canGenerateBlock = false;
         let peerUrl = "";
         this.currentSlot = slots.getSlotNumber();
+        //console.log("currentSlot is %d ",this.currentSlot);
         // if height of current peer is not enough, peer will not generate if it is delegate
         var onlinePeers = R.filter(obj => obj.status === '1')(this.peer.peers);
         const heighestPeer = R.sort(R.descend(R.prop('height')), onlinePeers)[0];
         if (heighestPeer == undefined) {
             //the choseDelegates must have current peer
             canGenerateBlock = true;
-            //console.log("there is not any peer except me,I can as Delegater!");
+            console.log("there is not any peer except me,I will be the only Delegater!");
         } else {
             //there are more than one working peers,chosed the highest peer as miner
+            // console.log(this.blockchain.getBlockHeight());
+            // console.log(heighestPeer.height);
             if (this.blockchain.getBlockHeight() != null && heighestPeer.height < this.blockchain.getBlockHeight()) {
                 //the choseDelegates must have current peer,problem:
-                //console.log("My chain is higher than others,I can as Delegater!");
+                console.log("My chain is higher than others,I can as Delegater!");
                 canGenerateBlock = true;
-            }else if(heighestPeer.height == this.blockchain.getBlockHeight()){
-                //console.log("My chain is higher equal other ,I can as Delegater!");
+            } else if(this.blockchain.getBlockHeight() != null && heighestPeer.height == this.blockchain.getBlockHeight()) {
+                console.log("My chain is  equal with others,I can as Delegater!");
+                canGenerateBlock = true;
+            }  else if(this.blockchain.getBlockHeight()==null || this.blockchain.getBlockHeight()==undefined){
+                console.log("the blockchain is null,I will be the only Delegater!");
                 canGenerateBlock = true;
             }
             else {
                 canGenerateBlock = false;
-                //console.log("My chain is lower than others,I can not as Delegater!");
+                console.log("My chain is lower than others,I can not as Delegater!");
             }
         }
 
         if (!canGenerateBlock) return;
         var lastBlock = this.blockchain.getLastBlock();
-        if(lastBlock==undefined || lastBlock==null ) return;
-        this.lastSlot = slots.getSlotNumber(slots.getTime(lastBlock.timestamp* 1000));
-        if (this.currentSlot === this.lastSlot || Date.now() % 10000 > 15000) return;
+        if(lastBlock==undefined || lastBlock==null) return;
+
+        this.lastSlot = slots.getSlotNumber(slots.getTime(lastBlock.timestamp * 1000));
+        //console.log("lastSlot %d" , this.lastSlot);
+        //there will leave slots.inteval-5 m to generate block and broadcast in this slots
+        if (this.currentSlot === this.lastSlot || (Date.now() % (slots.interval*1000) > 5000)) return;
 
         var delegateId = (this.currentSlot % slots.delegates)+1;
         console.log("chosed delegate Id is " + delegateId);
         if(delegateId==this.peer.id){
-            //the first time give up,because the slots is not exact
-            console.log(this.isFirstLoad);
-            if(this.isFirstLoad) {
-                this.isFirstLoad=false;
-                return;
-            }
-            console.log("*******************************Great:Now it's my turn to create a block*********************************")
+            console.log("Now it's my turn to create a block")
             this.generateBlockByDelegate(this.peer.addr,this.peer.addr);
             return;
         }else{
             var delegateIdIsOnline =R.filter(obj=>obj.id===delegateId)(R.filter(obj => obj.status === '1')(this.peer.peers));
-            if(delegateIdIsOnline==undefined) {
+            if(delegateIdIsOnline==undefined || delegateIdIsOnline==null || delegateIdIsOnline.length<=0) {
                 console.log("current delegate id is offline,skip this slot");
                 return;
             }
@@ -126,7 +132,18 @@ class Consensus {
         const previousBlock = blockchain.getLastBlock();
         const index = previousBlock.index + 1;
         const previousHash = previousBlock.hash;
-        const timestamp = Number(moment().format('X'));
+        //const timestamp = Number(moment().format('X'));  //这个timestamp有问题，有时生成以后的在前面取时有问题
+        const timestamp =Math.floor(Date.now() / 1000);
+
+        //use timestamp with the current slot generating timestamp,not current time tampstamp,
+        //or there will be error compute late block's slot
+
+        const genSlotNumber= slots.getSlotNumber(slots.getTime(timestamp * 1000));
+        if(this.currentSlot!=genSlotNumber){
+            console.log("important error, generate slotnumber by orginal slotnumber is not equal!")
+            return null;
+        }
+
         const blocks = blockchain.getAllBlocks();
         const candidateTransactions = blockchain.transactions;
         let miner = '';
