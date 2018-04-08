@@ -2,8 +2,8 @@
  Some ideas and codes come from conradoqg's naivecoin project
  https://github.com/conradoqg/naivecoin
  Thank you very much, conradoqg.
+ this method has been already given up from 2018-04-08. We will usd dpos method
  */
-
 'use strict';
 const R = require('ramda');
 const Block = require('../block/block');

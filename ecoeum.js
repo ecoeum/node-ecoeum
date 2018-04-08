@@ -19,5 +19,3 @@ const Api = require('./api');
 const account = new Account('account', global.blocks);
 const app = new Api(null, blocks, account, null, db, peer);
 app.listen(config.peer.host, config.peer.port);
-
-
