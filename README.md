@@ -6,7 +6,7 @@ Node-ecoeum is a block chain project included block chain, chain browser, wallet
 ## Features
 - Easy to install: clone source code, using npm install to complete the installation. Use Docker packaging is next plan.
 - Easy to understand: the code structure is by domain, divided into nodes, blocks, accounts, consensus, transactions and other  domains, the boundaries of each domain is clear, easy to understand
-- High-performance: using node.js , event driven and non-blocking I/O models
+- High-performance: using node.js , event driven and non-blocking I/O models, Use the dpos consensus mechanism
 - big file support: using couchdb as the block storage, supporting the storage of big files
 - Completeness: Node-ecoeum is still at the stage of development, yet it already has a complete concept of nodes, blocks, storage, accounts, mining, consensus, trading, APIs, browsers, wallets, contracts.
 ## Install
