@@ -19,6 +19,10 @@ module.exports = class TransactionBuilder {
         this.feeAmount = 0;
         this.secretKey = null;
         this.type = 'regular';
+        //todo:add by usermtl
+        this.coinRate='';  //token:main coin=0.05
+        this.coinName=''; //token name
+        this.content='';  //save other content
     }
 
     from(listOfUTXO) {
@@ -47,24 +51,65 @@ module.exports = class TransactionBuilder {
         return this;
     }
 
-    type(type) {
-        this.type = type;
-    }
-
     setType(type) {
         this.type = type;
+        return this;
+    }
+
+    setCoinRate(coinRate) {
+        this.coinRate = coinRate;
+        return this;
+    }
+
+    setCoinName(coinName) {
+        this.coinName = coinName;
+        return this;
+    }
+
+    setContent(content) {
+        this.content = content;
+        return this;
+    }
+
+
+    //todo: usermtl ->if judge utxo relative operation
+    needJudgeUtxo()
+    {
+        if(this.type=="CREATETOKEN" || this.type=="CREATEDOC" )
+            return false;
+        else
+            return true;
+    }
+
+    //todo: usermtl ->if judge utxo outputAddress operation
+    needJudgeoutputAddress()
+    {
+        if(this.type=="CREATETOKEN" || this.type=="CREATEDOC" )
+            return false;
+        else
+            return true;
+    }
+
+    //todo: usermtl ->if judge utxo totalAmount operation
+    needJudgeTotalAmount()
+    {
+        if(this.type=="CREATETOKEN" || this.type=="CREATEDOC" )
+            return false;
+        else
+            return true;
     }
 
     build() {
-        if (this.listOfUTXO == null) throw new AppError('It\'s necessary to inform a list of unspent output transactions.');
-        if (this.outputAddress == null) throw new AppError('It\'s necessary to inform the destination address.');
-        if (this.totalAmount == null) throw new AppError('It\'s necessary to inform the transaction value.');
-
-
-        let totalAmountOfUTXO = R.sum(R.pluck('amount', this.listOfUTXO));
-        let changeAmount = totalAmountOfUTXO - this.totalAmount - this.feeAmount;
-
-
+        if(this.needJudgeUtxo())
+            if (this.listOfUTXO == null) throw new AppError('It\'s necessary to inform a list of unspent output transactions.');
+        if(this.needJudgeoutputAddress())
+            if (this.outputAddress == null) throw new AppError('It\'s necessary to inform the destination address.');
+        if(this.needJudgeTotalAmount())
+        {
+            if (this.totalAmount == null) throw new AppError('It\'s necessary to inform the transaction value.');
+            let totalAmountOfUTXO = R.sum(R.pluck('amount', this.listOfUTXO));
+            let changeAmount = totalAmountOfUTXO - this.totalAmount - this.feeAmount;
+        }
 
         let self = this;
         let inputs = R.map((utxo) => {
@@ -79,21 +124,25 @@ module.exports = class TransactionBuilder {
 
         let outputs = [];
 
-        // Add target receiver
-        outputs.push({
-            amount: this.totalAmount,
-            address: this.outputAddress
-        });
-
-        // Add change amount
-        if (changeAmount > 0) {
+        if(this.needJudgeTotalAmount())
+        {
+            // Add target receiver
             outputs.push({
-                amount: changeAmount,
-                address: this.changeAddress
+                amount: this.totalAmount,
+                address: this.outputAddress
             });
-        } else {
-            if (this.type != 'CREATEUSER') {
-                throw new AppError('The sender does not have enough to pay for the transaction.' + this.type);
+
+            // Add change amount
+            if (changeAmount > 0) {
+                outputs.push({
+                    amount: changeAmount,
+                    address: this.changeAddress
+                });
+            } else {
+                //if (this.type != 'CREATEUSER') {  todo:usermtl
+                if (this.type == 'SEND') {
+                    throw new AppError('The sender does not have enough to pay for the transaction.' + this.type);
+                }
             }
         }
 
@@ -106,7 +155,11 @@ module.exports = class TransactionBuilder {
             data: {
                 inputs: inputs,
                 outputs: outputs
-            }
+            },
+            //todo:usermlt
+            coinRate:this.coinRate,
+            coinName:this.coinName,
+            content:this.content
         });
     }
 }

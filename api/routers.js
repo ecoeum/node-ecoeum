@@ -189,6 +189,52 @@ module.exports = function (blockchain, account, peer) {
         ctx.body = await global.trans.newTrans(data);
     });
 
+
+    /**
+     * @api {post} /account/createTokentrans create token Trans
+     * @apiName createtrans
+     * @apiGroup Account
+     * @apiDescription create transcation ,when user want to transfer accounts ; TODO: it will be broadcast to others peers;
+     * @apiParam {String} secretKey from user secretKey
+     * @apiParam {String} fromAddressId from user addreess
+     * @apiParam {String} toAddressId to user address
+     * @apiParam {Number} amount transfer amount
+     * @apiParam {String} changeAddressId value equals from user address
+     * @apiParam {coinRate} token/main coin
+     * @apiParam {coinName} coinName
+     * @apiParam {content} cointent
+     * @apiSuccess {Object} body       Result same to unconfirmtrans;
+
+
+     */
+    router.post('/account/createTokentrans', async (ctx, next) => {
+        const {secretKey, fromAddressId, toAddressId, amount, changeAddressId,coinRate,coinName,content} = ctx.request.body;
+        const data = await account.createTokenTrans(secretKey, fromAddressId, toAddressId, amount, changeAddressId,coinRate,coinName,content);
+        ctx.body = await global.trans.newTrans(data);
+    });
+
+
+    /**
+     * @api {post} /account/createOthertrans
+     * @apiName createtrans
+     * @apiGroup Account
+     * @apiDescription create transcation ,when user want to transfer accounts ; TODO: it will be broadcast to others peers;
+     * @apiParam {String} secretKey from user secretKey
+     * @apiParam {String} fromAddressId from user addreess
+     * @apiParam {String} toAddressId to user address
+     * @apiParam {Number} amount transfer amount
+     * @apiParam {String} changeAddressId value equals from user address
+     * @apiParam {content} cointent
+     * @apiSuccess {Object} body       Result same to unconfirmtrans;
+
+
+     */
+    router.post('/account/createOthertrans', async (ctx, next) => {
+        const {secretKey, fromAddressId, toAddressId, amount, changeAddressId,content} = ctx.request.body;
+        const data = await account.createOtherTrans(secretKey, fromAddressId, toAddressId, amount, changeAddressId,content);
+        ctx.body = await global.trans.newTrans(data);
+    });
+
     /**
      * @api {get} /account/banlance/:addressId getAccountBanlance
      * @apiName getAccountBanlance

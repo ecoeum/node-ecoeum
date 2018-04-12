@@ -84,6 +84,55 @@ class Account {
         let newTransaction = Transcation.fromJson(tx.build());
         return newTransaction;
     }
+
+    //todo:usermtl addGenerateToken trans
+    async createTokenTrans(secretKey, fromAddressId, toAddressId, amount, changeAddressId,coinRate,coinName,content) {
+
+        const keyPairRaw = CryptoEdDSAUtil.generateKeyPairFromSecret(secretKey);
+
+        if (CryptoEdDSAUtil.toHex(keyPairRaw.getPublic()) != fromAddressId) {
+            throw new AppError(`Secret key Error`);
+        }
+        //TODO: Here you need to verify that the sender's address is a valid address
+
+        //unspentTransactions;
+        let unspentTransactions = await this.blocks.getUnspentTransactionsForAddress(fromAddressId);
+        let tx = new TransBuilder();
+        tx.from(unspentTransactions);
+        tx.to(toAddressId, amount);
+        tx.change(changeAddressId || fromAddressId);
+        tx.fee(0);
+        tx.sign(secretKey);
+        tx.setType(transcation_types.CREATETOKEN);
+        tx.setCoinRate(coinRate);
+        tx.setCoinName(coinName);
+        tx.setContent(content);
+        let newTransaction = Transcation.fromJson(tx.build());
+        return newTransaction;
+    }
+
+    //todo:usermtl add file or other trans
+    async createOtherTrans(secretKey, fromAddressId, toAddressId, amount, changeAddressId,content) {
+
+        const keyPairRaw = CryptoEdDSAUtil.generateKeyPairFromSecret(secretKey);
+
+        if (CryptoEdDSAUtil.toHex(keyPairRaw.getPublic()) != fromAddressId) {
+            throw new AppError(`Secret key Error`);
+        }
+        //TODO: Here you need to verify that the sender's address is a valid address
+        //unspentTransactions;
+        let unspentTransactions = await this.blocks.getUnspentTransactionsForAddress(fromAddressId);
+        let tx = new TransBuilder();
+        tx.from(unspentTransactions);
+        tx.to(toAddressId, amount);
+        tx.change(changeAddressId || fromAddressId);
+        tx.fee(0);
+        tx.sign(secretKey);
+        tx.setType(transcation_types.CREATEDOC);
+        tx.setContent(content);
+        let newTransaction = Transcation.fromJson(tx.build());
+        return newTransaction;
+    }
 }
 
 module.exports = Account

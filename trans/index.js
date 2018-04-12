@@ -5,7 +5,7 @@ const CryptoUtil = require('../util/cryptoUtil');
 const AppError = require('../util/appError');
 const CryptoEdDSAUtil = require('../util/cryptoEdDSAUtil');
 const HTTPError = require('../util/httpError');
-const TransType=require('./transcation_types')
+const TransType = require('./transcation_types')
 
 class Transaction {
     constructor() {
@@ -15,11 +15,14 @@ class Transaction {
         this.data = {
             inputs: [],
             outputs: []
-        }
+        },
+        this.coinRate = '';  //token:main coin
+        this.coinName = ''; //token name
+        this.content = '';  //save other content
     }
 
     toHash() {
-        return CryptoUtil.hash(this.id + this.type + JSON.stringify(this.data));
+        return CryptoUtil.hash(this.id + this.type + JSON.stringify(this.data)+this.coinRate+this.coinName+this.content);
     }
 
     /**
@@ -58,7 +61,7 @@ class Transaction {
 
     async newTrans(transData) {
         const requestTransaction = Transaction.fromJson(transData);
-        if(requestTransaction.hash != transData.hash){
+        if (requestTransaction.hash != transData.hash) {
             throw new HTTPError(409, `Transaction '${requestTransaction.id}' data may be modified`);
         }
         //if Exist on current transcationList show Error;
@@ -73,8 +76,6 @@ class Transaction {
         }
         return transData;
     }
-
-
 
 }
 

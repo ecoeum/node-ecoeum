@@ -131,4 +131,4 @@ class BasicToken {
     }
 }
 
-module.exports = BasicToken;
+//module.exports = BasicToken;
